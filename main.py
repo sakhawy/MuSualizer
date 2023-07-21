@@ -3,6 +3,9 @@
 This is a simple visualization of the infamous MU puzzle from Douglas Hofstadter's book, 
 "Godel, Escher, Bach: An Eternal Golden Braid".
 """
+
+import graphviz
+
 class AdjacencyList:
     def __init__(self, key):
         self.hashmap = {
@@ -38,7 +41,7 @@ def main():
 
     # while queue is not empty (bfs)
     # (for loop for now)
-    for i in range(5):
+    for i in range(8):
         print(mi_graph.hashmap)
 
         # dequeue
@@ -74,6 +77,15 @@ def main():
                             mi_graph.add(adjacent_node, adjacent_node[:i] + adjacent_node[i+2:])
 
                     mi_graph.add(adjacent_node, adjacent_node + adjacent_node[1:])
+
+    graph = graphviz.Digraph('MuSualizer')
+
+    for k, v in mi_graph.hashmap.items():
+        for i in v:
+            graph.edge(k, i)
+    
+    graph.format = 'png'
+    graph.render('MuSualizer', view=True)
 
 if __name__ == '__main__':
     main()
